@@ -8,7 +8,7 @@ function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
         if(window.localStorage.getItem("score")){
-            score = window.localStorage.getItem("score"); 
+            score = parseInt(window.localStorage.getItem("score")); 
             document.querySelector("span").innerText = `MeowCount: ${score}`;
         }
         document.querySelector("#cat_img").addEventListener("click", function(){
@@ -57,8 +57,8 @@ function randomNumber(min, max) {
           score = 0;
           document.querySelector(".score").innerText = `MeowCount: ${score}`;
           window.localStorage.setItem("score", score);
-            e.target.blur();
             window.click_strength = 1;
+            document.location.reload();
         })
         setInterval(function(){
             document.querySelector(".cps").innerText = `CPS: ${cps}`;
@@ -73,6 +73,7 @@ document.body.addEventListener("click", function(e){
         if(e.target.id == "x_open"){
             document.querySelector(".shop").style.animation = "slideInRight 0.5s ease"
             document.querySelector(".shop").style.display = "block";
+            document.querySelector(".shop > h3").innerText = score+"C";
         }else{
             document.querySelector(".shop").style.animation = "slideOutRight 0.5s ease"
             setTimeout(function(){
@@ -85,12 +86,20 @@ document.body.addEventListener("click", function(e){
         score = score-parseInt(e.target.dataset.price);
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
           window.localStorage.setItem("score", score);
+        document.querySelector(".shop > h3").innerText = score+"C";
         if(e.target.dataset.type == "click_strength"){
             window.click_strength++;
             document.querySelector("#label_strength").innerText = `Stronger click (${window.click_strength})`;
+            e.target.dataset.price = parseInt(e.target.dataset.price)+100;
+            e.target.innerText = `Buy (${e.target.dataset.price})`;
+        }
+        if(document.querySelector(".span_bieda")){
+            document.querySelector(".span_bieda").remove();
         }
         }else{
-            alert("Nie stać cie")
+            if(!document.querySelector(".span_bieda")){
+            document.querySelector(".shop > h3").innerHTML =  document.querySelector(".shop > h3").innerHTML+`<br /><span class="span_bieda">Nie stać cie ;(</span>`;
+            }
         }
     }
 })

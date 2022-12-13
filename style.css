@@ -79,6 +79,8 @@ transform:rotate(360deg);
 }
 .shop > h2{
     text-align: center;
+    font-size: 32px;
+    margin-top: 10px;
 }
 .x_icon{
     display: block;
@@ -98,10 +100,15 @@ transform:rotate(360deg);
     margin: auto;
     height: 65px;
     padding-top: 35px;
+    cursor: pointer;
+}
+.shop_item:hover{
+    background: #dd9c54;
 }
 .shop_item > label{
     font-size: 18px;
-    margin-left: 30px;
+    float: left;
+    letter-spacing: -2px;
 }
 .shop_item > button{
     outline: none;
@@ -113,6 +120,30 @@ transform:rotate(360deg);
     width: 140px;
     font-family: 'font';
     margin-left: 20px;
+    float: left;
+    transition: 0.4s;
+}
+.shop_item > button:hover{
+    background: #000;
+    color: #fff;
+}
+.shop_img{
+    float: left;
+    margin-top: -15px;
+    margin-right: 10px;
+    margin-left: 15px;
+}
+.shop > h3{
+    font-size: 25px;
+    width: 100%;
+    text-align: center;
+    font-weight: 100;
+    margin-top: -15px;
+}
+.span_bieda{
+    display: block;
+    color: #e74c3c;
+    margin-top: 15px;
 }
 @keyframes slideInRight{0%{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @keyframes slideOutRight{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);visibility:hidden}}
