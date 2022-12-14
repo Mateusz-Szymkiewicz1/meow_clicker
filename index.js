@@ -1,17 +1,60 @@
 let cps = 0;
 let score = 0;
 window.click_strength = 1;
+window.idle_clicks = 0;
 document.querySelector("#label_strength").innerText = `Stronger click (${window.click_strength})`;
+document.querySelector("#label_idle").innerText = `Auto clicking (${window.idle_clicks})`;
 function randomNumber(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+function save(){
+  window.localStorage.setItem("score", JSON.stringify({
+    score: score,
+    click_strength: window.click_strength,
+    idle_clicks: window.idle_clicks,
+  }));
+}
+function click_effect(e){
+  let div = document.createElement("div");
+  div.classList.add("random_div");
+  div.innerText = `+${window.click_strength}`;
+  div.setAttribute("style", `position: absolute; top: ${e.clientY}px;left: ${e.clientX}px;`);
+  document.body.appendChild(div);
+  setTimeout(function(){
+    div.remove();
+  }, 500)
+}
+async function decision(){
+  return new Promise(function(resolve, reject){
+    let decision = document.createElement("div");
+    decision.classList.add("decision");
+    decision.innerHTML = `<span>Na pewno?</span><br /><button id="button_tak">TAK</button><button id="button_nie">NIE</button>`;
+    document.body.appendChild(decision);
+    decision.style.animation = "slideInDown 0.5s ease";
+    document.querySelector("#button_tak").addEventListener("click", function(){
+      resolve();
+    })
+    document.querySelector("#button_nie").addEventListener("click", function(){
+      reject();
+    })
+  })
+}
         if(window.localStorage.getItem("score")){
-            score = parseInt(window.localStorage.getItem("score")); 
+            let json = JSON.parse(window.localStorage.getItem("score"));
+            score = parseInt(json.score);
+            window.click_strength = parseInt(json.click_strength);
+            document.querySelector("#label_strength").innerText = `Stronger click (${window.click_strength})`;
+            document.querySelector("#buy_strength").innerText = `Buy (${window.click_strength*100})`;
+            document.querySelector("#buy_strength").dataset.price = window.click_strength*100;
+            window.idle_clicks = parseInt(json.idle_clicks);
+            document.querySelector("#label_idle").innerText = `Stronger click (${window.idle_clicks})`;
+            document.querySelector("#buy_idle").innerText = `Buy (${(window.idle_clicks+1)*200})`;
+            document.querySelector("#buy_idle").dataset.price = (window.idle_clicks+1)*200;
             document.querySelector("span").innerText = `MeowCount: ${score}`;
         }
-        document.querySelector("#cat_img").addEventListener("click", function(){
+        document.querySelector("#cat_img").addEventListener("click", function(e){
             cps++;
             score = parseInt(score+window.click_strength);
             if(score == 2137){
@@ -25,11 +68,13 @@ function randomNumber(min, max) {
             }else{
                 document.querySelector("#cat_img").style.transform = "scale(1)"
             }
+            click_effect(e);
             let audio = document.querySelector(".audio_meow").cloneNode(true);
             audio.volume = 0.2;
             audio.play();
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
-            window.localStorage.setItem("score", score);
+            document.querySelector(".shop > h3").innerText = score+"C";
+            save();
         })
         document.body.addEventListener("keyup", function(e){
             cps++;
@@ -50,15 +95,23 @@ function randomNumber(min, max) {
             audio.volume = 0.2;
             audio.play();
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
-            window.localStorage.setItem("score", score);
+            document.querySelector(".shop > h3").innerText = score+"C";
+            save();
         }
         })
-        document.querySelector(".reset_btn").addEventListener("click", function(e){
-          score = 0;
-          document.querySelector(".score").innerText = `MeowCount: ${score}`;
-          window.localStorage.setItem("score", score);
-            window.click_strength = 1;
-            document.location.reload();
+        document.querySelector(".reset_btn").addEventListener("click", async function(e){
+          await decision().then(function(){
+            score = 0;
+            document.querySelector(".score").innerText = `MeowCount: ${score}`;
+            window.localStorage.removeItem("score");
+              window.click_strength = 1;
+              document.location.reload();
+          }, function(){
+            document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
+            setTimeout(function(){
+              document.querySelector(".decision").remove();
+            }, 500)
+          });
         })
         setInterval(function(){
             document.querySelector(".cps").innerText = `CPS: ${cps}`;
@@ -68,6 +121,21 @@ function randomNumber(min, max) {
             }
             cps = 0;
         }, 1000)
+      if(window.idle_clicks > 0){
+        window.interval = setInterval(function(){
+            score++;
+           save();
+            document.querySelector(".score").innerText = `MeowCount: ${score}`;
+            document.querySelector(".shop > h3").innerText = score+"C";
+            if(score == 2137){
+              document.querySelector("canvas").style.display = "block"; 
+              document.querySelector("#cat_img").style.animation = "spin 2s infinite"; 
+              document.querySelector(".score").style.animation = "spin 2s infinite"; 
+              document.querySelector(".cps").style.animation = "spin 2s infinite"; 
+              clearInterval(window.interval);
+           }
+        }, 1000/window.idle_clicks)
+      }
 document.body.addEventListener("click", function(e){
     if(e.target.className == "x_icon"){
         if(e.target.id == "x_open"){
@@ -85,7 +153,7 @@ document.body.addEventListener("click", function(e){
         if(score >= parseInt(e.target.dataset.price)){
         score = score-parseInt(e.target.dataset.price);
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
-          window.localStorage.setItem("score", score);
+         save();
         document.querySelector(".shop > h3").innerText = score+"C";
         if(e.target.dataset.type == "click_strength"){
             window.click_strength++;
@@ -93,14 +161,46 @@ document.body.addEventListener("click", function(e){
             e.target.dataset.price = parseInt(e.target.dataset.price)+100;
             e.target.innerText = `Buy (${e.target.dataset.price})`;
         }
+        if(e.target.dataset.type == "idle_clicks"){
+          window.idle_clicks++;
+          document.querySelector("#label_idle").innerText = `Auto clicking (${window.idle_clicks})`;
+          e.target.dataset.price = parseInt(e.target.dataset.price)+200;
+          e.target.innerText = `Buy (${e.target.dataset.price})`;
+         if(window.interval){
+          clearInterval(window.interval);
+         }
+          window.interval = setInterval(function(){
+            score++;
+            save();
+            document.querySelector(".score").innerText = `MeowCount: ${score}`;
+            document.querySelector(".shop > h3").innerText = score+"C";
+            if(score == 2137){
+              document.querySelector("canvas").style.display = "block"; 
+              document.querySelector("#cat_img").style.animation = "spin 2s infinite"; 
+              document.querySelector(".score").style.animation = "spin 2s infinite"; 
+              document.querySelector(".cps").style.animation = "spin 2s infinite"; 
+              clearInterval(window.interval);
+           }
+        }, 1000/window.idle_clicks)
+      }
         if(document.querySelector(".span_bieda")){
             document.querySelector(".span_bieda").remove();
         }
         }else{
             if(!document.querySelector(".span_bieda")){
             document.querySelector(".shop > h3").innerHTML =  document.querySelector(".shop > h3").innerHTML+`<br /><span class="span_bieda">Nie stać cie ;(</span>`;
+            document.querySelector(".shop > h3").style.animation = "shake 1s ease";
+            setTimeout(function(){
+              document.querySelector(".shop > h3").style.animation = "none";
+            }, 1000)
+            }else{
+              document.querySelector(".shop > h3").style.animation = "shake 1s ease";
+              setTimeout(function(){
+                document.querySelector(".shop > h3").style.animation = "none";
+              }, 1000)
             }
         }
+        e.target.blur();
     }
 })
         let W = window.innerWidth;
