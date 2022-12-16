@@ -66,7 +66,7 @@ transform:rotate(360deg);
 .cps{
     margin-top: 0px;
 }
-.shop{
+.shop, .skiny{
     position: absolute;
     top: 0;
     right: 0;
@@ -77,12 +77,12 @@ transform:rotate(360deg);
     display: none;
     overflow-y: auto;
 }
-.shop > h2{
+.shop > h2, .skiny > h2{
     text-align: center;
     font-size: 32px;
     margin-top: 10px;
 }
-.x_icon{
+.x_icon, .x_icon_skins{
     display: block;
     position: absolute;
     top: 0px;
@@ -90,11 +90,15 @@ transform:rotate(360deg);
     cursor: pointer;
     font-size: 40px;
 }
+#span_skins{
+    top: 60px;
+    text-decoration: underline;
+}
 #x_open{
     color: #000;
     text-decoration: underline;
 }
-.shop_item{
+.shop_item, .skin{
     background: #eead65;
     width: 90%;
     margin: auto;
@@ -103,16 +107,16 @@ transform:rotate(360deg);
     cursor: pointer;
     transition: 0.4s;
 }
-.shop_item:hover{
+.shop_item, .skin:hover{
     background: #dd9c54;
 }
-.shop_item > label{
+.shop_item > label, .skin > label{
     font-size: 18px;
     float: left;
     pointer-events: none;
     letter-spacing: -2px;
 }
-.shop_item > button{
+.shop_item > button, .skin>button{
     outline: none;
     border: 0;
     background: #fff;
@@ -125,17 +129,17 @@ transform:rotate(360deg);
     float: left;
     transition: 0.4s;
 }
-.shop_item > button:hover{
+.shop_item > button:hover, .skin>button:hover{
     background: #000;
     color: #fff;
 }
-.shop_img{
+.shop_img, .skin > img{
     float: left;
     margin-top: -15px;
     margin-right: 10px;
     margin-left: 15px;
 }
-.shop > h3{
+.shop > h3, .skiny > h3{
     font-size: 25px;
     width: 100%;
     text-align: center;
@@ -199,9 +203,27 @@ transform:rotate(360deg);
     cursor: pointer;
     transition: 0.4s;
 }
+.skiny{
+        overflow-x: hidden;
+}
 #button_tak:hover{
     background: #1dbb60;
 }
+.skin{
+ height: 100px;  
+    margin-bottom: 20px;
+}
+.skin > label{
+    font-size: 25px;
+    margin-left: 15px;
+    margin-top: 11px;
+}
+.skin>button{
+    width: 120px;
+}
+
+
+
 @keyframes slideInRight{0%{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @keyframes slideOutRight{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);visibility:hidden}}
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}

@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <img src="meow.jpg" id="cat_img" style="transform: scale(1)" draggable="false">
+    <img src="images/loading.gif" id="cat_img" style="transform: scale(1)" draggable="false">
     <span class="score">MeowCount: 0</span>
     <span class="cps">CPS : 0</span>
-    <audio src="meow.mp3" class="audio_meow"></audio>
+    <audio src="audio/meow.mp3" class="audio_meow"></audio>
     <audio src="audio/sound1.wav" class="audio"></audio>
     <audio src="audio/sound2.wav" class="audio"></audio>
     <audio src="audio/sound3.wav" class="audio"></audio>
@@ -26,6 +26,7 @@
     <canvas id="canvas"></canvas>
     <button class="reset_btn">Reset</button>
     <span class="x_icon" id="x_open">Sklep</span>
+    <span class="x_icon_skins" id="span_skins">Skiny</span>
     <div class="shop">
     <span class="x_icon" id="x_close">x</span>
     <h2>Sklep</h2>
@@ -40,6 +41,21 @@
             <label id="label_idle"></label>
             <button class="buy" data-price="200" data-type="idle_clicks" id="buy_idle">Buy (200)</button>
         </div>
+    </div>
+    <div class="skiny">
+       <span class="x_icon_skins" id="x_close">x</span>
+        <h2>Skiny</h2>
+    <h3></h3>
+    <div class="skin" data-name="robert" data-state="1">
+        <img src="images/robert.jpg" width="100px" height="100px">
+        <label class="skin_label">Robert</label><br /><br /><br />
+        <button class="skin_buy">Kup</button><button class="skin_set">Ustaw</button>
+    </div>
+    <div class="skin" data-name="herbert" data-state="0">
+        <img src="images/herbert.jpg" width="100px" height="100px">
+        <label class="skin_label">Herbert</label><br /><br /><br />
+        <button class="skin_buy" data-price="400">Kup (400)</button><button class="skin_set">Ustaw</button>
+    </div>
     </div>
 </body>
 </html>
