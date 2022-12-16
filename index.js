@@ -252,6 +252,9 @@ document.body.addEventListener("click", function(e){
             window.skins.push(e.target.parentElement.dataset.name);
             score -= e.target.dataset.price;
             skiny_check();
+            document.querySelector(".score").innerText = `MeowCount: ${score}`;
+            document.querySelector(".shop > h3").innerText = score+"C";
+            document.querySelector(".skiny > h3").innerText = score+"C";
             save();
         }else{
            if(!document.querySelector(".span_bieda")){
