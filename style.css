@@ -10,16 +10,18 @@ body{
 #cat_img{
    display: block;
    margin: auto;
-   margin-top: 5%;
+   margin-top: 11vh;
    cursor: pointer;
    transition: 0.1s;
    box-shadow: -3px 1px 42px -5px rgba(0,0,0,0.75);
     height: 20vw;
     width: 20vw;
+    min-height: 150px;
+    min-width: 150px;
 }
 .score, .cps{
     display: block;
-   font-size: 50px;
+   font-size: 3em;
    width: 100%;
    text-align: center;
    margin-top: 30px;
@@ -88,7 +90,7 @@ transform:rotate(360deg);
     top: 0px;
     right: 10px;
     cursor: pointer;
-    font-size: 40px;
+    font-size: 3em;
 }
 #span_skins{
     top: 60px;
