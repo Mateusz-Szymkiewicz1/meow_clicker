@@ -225,7 +225,18 @@ transform:rotate(360deg);
     width: 120px;
 }
 
-
+@media only screen and (max-width: 466px) {
+    .skin{
+        height: 130px;
+    }
+    .skin_set{
+        margin-top: 10px;
+       margin-left: 13px !important;
+    }
+    .skin_buy{
+        margin-right: 20px;
+    }
+}
 
 @keyframes slideInRight{0%{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @keyframes slideOutRight{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);visibility:hidden}}
