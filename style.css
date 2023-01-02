@@ -166,11 +166,13 @@ transform:rotate(360deg);
     pointer-events: none;
 }
 .decision{
+    margin: auto;
     position: absolute;
     width: 400px;
     height: 120px;
-    left: 40%;
     top: 30px;
+    left: 0;
+  right: 0;
     background: #ffbe76;
     color: #fff;
     font-size: 28px;

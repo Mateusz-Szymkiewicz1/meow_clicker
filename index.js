@@ -131,6 +131,7 @@ async function decision(){
         }
         })
         document.querySelector(".reset_btn").addEventListener("click", async function(e){
+                if(!document.querySelector(".decision")){
           await decision().then(function(){
             score = 0;
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
@@ -143,6 +144,7 @@ async function decision(){
               document.querySelector(".decision").remove();
             }, 500)
           });
+                }
         })
         setInterval(function(){
             document.querySelector(".cps").innerText = `CPS: ${cps}`;
