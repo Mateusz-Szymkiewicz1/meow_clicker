@@ -3,7 +3,7 @@
     src: url(font.ttf) format("truetype");
 }
 body{
-    overflow: hidden;
+    overflow-x: hidden;
     user-select: none;
     font-family: font;
 }
@@ -16,8 +16,8 @@ body{
    box-shadow: -3px 1px 42px -5px rgba(0,0,0,0.75);
     height: 20vw;
     width: 20vw;
-    min-height: 150px;
-    min-width: 150px;
+    min-height: 200px;
+    min-width: 200px;
 }
 .score, .cps{
     display: block;

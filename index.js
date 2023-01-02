@@ -383,3 +383,17 @@ for (var i = 0; i < maxConfettis; i++) {
 canvas.width = W;
 canvas.height = H;
 Draw();
+
+function myFunction(x) {
+  if (x.matches) { // If media query matches
+    document.querySelector("#x_open").innerHTML = '<i class="fa fa-shopping-cart" style="pointer-events: none;"></i>';
+    document.querySelector("#span_skins").innerHTML = '<i class="fa fa-paint-brush" style="pointer-events: none;"></i>';
+  } else {
+    document.querySelector("#x_open").innerHTML = "SKLEP";
+    document.querySelector("#span_skins").innerHTML = "SKINY";
+  }
+}
+
+var x = window.matchMedia("(max-width: 630px)")
+myFunction(x) // Call listener function at run time
+x.addListener(myFunction) // Attach listener function on state changes
