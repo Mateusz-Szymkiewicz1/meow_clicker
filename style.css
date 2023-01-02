@@ -173,6 +173,7 @@ transform:rotate(360deg);
     top: 30px;
     left: 0;
   right: 0;
+    max-width: 90%;
     background: #ffbe76;
     color: #fff;
     font-size: 28px;
