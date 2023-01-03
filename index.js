@@ -139,6 +139,7 @@ async function decision(){
             document.querySelector(".cps").innerText = `CPS: ${cps}`;
             if(cps > 5){
                 let rand = Math.floor(randomNumber(2,10));
+                document.querySelector(`.audio:nth-of-type(${rand})`).volume = window.volume;
                 document.querySelector(`.audio:nth-of-type(${rand})`).play();
             }
             cps = 0;
