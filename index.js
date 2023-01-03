@@ -1,6 +1,7 @@
 let cps = 0;
 let score = 0;
 window.volume = 1;
+window.theme = "light";
 window.click_strength = 1;
 window.idle_clicks = 0;
 window.skins = ["robert"];
@@ -26,6 +27,16 @@ if(window.localStorage.getItem("score")){
             document.querySelector("span").innerText = `MeowCount: ${score}`;
             window.skins = json.skins;
             window.current_skin = json.current_skin;
+}
+if(window.localStorage.getItem("meow_settings")){
+            let json = JSON.parse(window.localStorage.getItem("meow_settings"));
+            window.volume = json.volume;
+            window.theme = json.theme;
+            document.querySelector(".settings > input").value = window.volume*100;
+            if(window.theme == "dark"){
+                 document.querySelector(".theme_switch").removeAttribute("checked");
+                dark_theme();
+            }
 }
 document.querySelector("#cat_img").src = `images/${window.current_skin}.jpg`;
 skiny_check();
@@ -57,6 +68,12 @@ function save(){
     idle_clicks: window.idle_clicks,
     skins: window.skins,
       current_skin: window.current_skin,
+  }));
+}
+function save_settings(){
+  window.localStorage.setItem("meow_settings", JSON.stringify({
+    volume: window.volume,
+    theme: window.theme,
   }));
 }
 function click_effect(e){
@@ -282,18 +299,27 @@ document.querySelector("#x_settings").addEventListener("click", function(){
                 document.querySelector(".settings").style.display = "none";
             }, 500)
 })
+let timeout = 12;
 document.querySelector(".settings > input").addEventListener("input", function(e){
+    if(typeof timeout !== 'undefined' || timeout !== null){
+               clearTimeout(timeout);
+        }
     let volume = e.target.value/100;
     window.volume = volume;
+    timeout = setTimeout(function(){
+        save_settings();
+    }, 500)
 })
-document.querySelector(".theme_switch").addEventListener("click", function(){
-    if(document.querySelector(".new_style")){
+function light_theme(){
+    window.theme = "light";
         document.documentElement.style.setProperty('--color', '#000000');
         document.documentElement.style.setProperty('--bg', '#ffffff');
         document.documentElement.style.setProperty('--button-bg', '#202020');
         document.querySelector(".reset_btn").style.cssText = "border: 1px solid #202020g;";
         document.querySelector(".new_style").remove();
-    }else{
+}
+function dark_theme(){
+    window.theme = "dark";
         document.documentElement.style.setProperty('--color', '#ffffff');
         document.documentElement.style.setProperty('--bg', '#202020');
         document.documentElement.style.setProperty('--button-bg', 'transparent');
@@ -302,5 +328,13 @@ document.querySelector(".theme_switch").addEventListener("click", function(){
         new_style.classList.add("new_style");
         new_style.innerHTML = ".reset_btn:hover{background: #fff;color: #202020;}";
         document.querySelector(".settings").appendChild(new_style);
+}
+document.querySelector(".theme_switch").addEventListener("click", function(){
+    if(document.querySelector(".new_style")){
+        light_theme();
+         save_settings();
+    }else{
+        dark_theme();
+         save_settings();
     }
 })
