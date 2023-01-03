@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+<body id="body">
     <img src="images/loading.gif" id="cat_img" style="transform: scale(1)" draggable="false">
     <span class="score">MeowCount: 0</span>
     <span class="cps">CPS : 0</span>
@@ -82,6 +82,20 @@
         <label class="skin_label">Karol</label><br /><br /><br />
         <button class="skin_buy" data-price="2138">Kup (2138)</button><button class="skin_set">Ustaw</button>
     </div>
+    </div>
+    <i class="fa fa-cog settings_icon"></i>
+    <div class="settings">
+        <span class="x_icon" id="x_settings">x</span>
+        <h2>Ustawienia</h2><br /><br />
+        <label>Głosnosć</label><br /><br />
+        <input type="range"><br /><br />
+        <label>Motyw</label><br /><br />
+        <div class='toggle-switch'>
+            <label>
+                <input type='checkbox' checked="true" class="theme_switch">
+                <span class='slider'></span>
+            </label>
+        </div>
     </div>
 </body>
 </html>

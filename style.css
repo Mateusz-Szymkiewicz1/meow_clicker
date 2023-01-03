@@ -1,3 +1,10 @@
+:root {
+  --light: #d8dbe0;
+  --dark: #28292c;
+  --color: #000;
+  --bg: #fff;
+  --button-bg: #202020;
+}
 @font-face {
     font-family: font;
     src: url(font.ttf) format("truetype");
@@ -6,6 +13,7 @@ body{
     overflow-x: hidden;
     user-select: none;
     font-family: font;
+    background: var(--bg);
 }
 #cat_img{
    display: block;
@@ -26,6 +34,7 @@ body{
    text-align: center;
    margin-top: 30px;
    text-shadow: -2px 1px 2px rgba(0,0,0,0.6);
+    color: var(--color);
 }
 canvas {
    position: absolute;
@@ -46,16 +55,16 @@ margin-top: 30px;
 cursor: pointer;
 font-family: font;
 font-size: 18px;
-background-color: #202020;
+background-color: var(--button-bg);
 color: #fff;
 border: 0;
 outline: none;
 transition: 0.4s;
 }
 .reset_btn:hover{
-    border: 1px solid #000;
-    background-color: #fff;
-    color: #202020;
+    border: 1px solid var(--color);
+    background-color: var(--bg);
+    color: var(--button-bg);
 }
 @keyframes spin {
 from {
@@ -68,7 +77,7 @@ transform:rotate(360deg);
 .cps{
     margin-top: 0px;
 }
-.shop, .skiny{
+.shop, .skiny, .settings{
     position: absolute;
     top: 0;
     right: 0;
@@ -79,8 +88,9 @@ transform:rotate(360deg);
     color: #fff;
     display: none;
     overflow-y: auto;
+    z-index: 100;
 }
-.shop > h2, .skiny > h2{
+.shop > h2, .skiny > h2, .settings > h2{
     text-align: center;
     font-size: 32px;
     margin-top: 10px;
@@ -96,9 +106,10 @@ transform:rotate(360deg);
 #span_skins{
     top: 60px;
     text-decoration: underline;
+    color: var(--color);
 }
 #x_open{
-    color: #000;
+    color: var(--color);
     text-decoration: underline;
 }
 .shop_item, .skin{
@@ -262,3 +273,76 @@ transform:rotate(360deg);
       transform: translate3d(4px, 0, 0);
     }
   }
+.settings_icon{
+    display: block !important;
+    position: absolute;
+    top: 130px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 3em !important;
+    z-index: 0;
+    color: var(--color);
+}
+.settings > input[type=range]{
+    margin-left: 100px;
+    transform: scale(2);
+    cursor: pointer;
+    outline: none;
+    border: 0;
+}
+.settings > label{
+    margin-left: 35px;
+    font-size: 25px;
+}
+.toggle-switch {
+  position: relative;
+  width: 200px;
+}
+.toggle-switch label {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  background-color: var(--dark);
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.toggle-switch input{
+  position: absolute;
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.toggle-switch input:checked ~ .slider {
+  background-color: var(--light);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 16px;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  box-shadow: inset 28px -4px 0px 0px var(--light);
+  background-color: var(--dark);
+  transition: 0.3s;
+}
+
+.toggle-switch input:checked ~ .slider::before {
+  transform: translateX(95px);
+  background-color: var(--dark);
+  box-shadow: none;
+}
+.toggle-switch {
+  transform: scale(0.5);
+    margin-left: -13px;
+}

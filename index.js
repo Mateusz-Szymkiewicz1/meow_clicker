@@ -1,5 +1,6 @@
 let cps = 0;
 let score = 0;
+window.volume = 1;
 window.click_strength = 1;
 window.idle_clicks = 0;
 window.skins = ["robert"];
@@ -86,12 +87,6 @@ async function decision(){
         document.querySelector("#cat_img").addEventListener("click", function(e){
             cps++;
             score = parseInt(score+window.click_strength);
-            if(score == 100000){
-               document.querySelector("canvas").style.display = "block"; 
-               document.querySelector("#cat_img").style.animation = "spin 2s infinite"; 
-               document.querySelector(".score").style.animation = "spin 2s infinite"; 
-               document.querySelector(".cps").style.animation = "spin 2s infinite"; 
-            }
             if(document.querySelector("#cat_img").style.transform =="scale(1)"){
                 document.querySelector("#cat_img").style.transform = "scale(1.1)"; 
             }else{
@@ -99,7 +94,7 @@ async function decision(){
             }
             click_effect(e);
             let audio = document.querySelector(".audio_meow").cloneNode(true);
-            audio.volume = 0.2;
+            audio.volume = 0.4*window.volume;
             audio.play();
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
             document.querySelector(".shop > h3").innerText = score+"C";
@@ -110,19 +105,13 @@ async function decision(){
             cps++;
             if(e.code == "Space"){
             score = parseInt(score+window.click_strength);
-            if(score == 100000){
-               document.querySelector("canvas").style.display = "block"; 
-               document.querySelector("#cat_img").style.animation = "spin 2s infinite"; 
-               document.querySelector(".score").style.animation = "spin 2s infinite"; 
-               document.querySelector(".cps").style.animation = "spin 2s infinite"; 
-            }
             if(document.querySelector("#cat_img").style.transform =="scale(1)"){
                 document.querySelector("#cat_img").style.transform = "scale(1.1)"; 
             }else{
                 document.querySelector("#cat_img").style.transform = "scale(1)"
             }
             let audio = document.querySelector(".audio_meow").cloneNode(true);
-            audio.volume = 0.2;
+            audio.volume = 0.4*window.volume;
             audio.play();
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
             document.querySelector(".shop > h3").innerText = score+"C";
@@ -161,13 +150,6 @@ async function decision(){
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
             document.querySelector(".shop > h3").innerText = score+"C";
             document.querySelector(".skiny > h3").innerText = score+"C";
-            if(score == 100000){
-              document.querySelector("canvas").style.display = "block"; 
-              document.querySelector("#cat_img").style.animation = "spin 2s infinite"; 
-              document.querySelector(".score").style.animation = "spin 2s infinite"; 
-              document.querySelector(".cps").style.animation = "spin 2s infinite"; 
-              clearInterval(window.interval);
-           }
         }, 1000/window.idle_clicks)
       }
 document.body.addEventListener("click", function(e){
@@ -221,13 +203,6 @@ document.body.addEventListener("click", function(e){
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
             document.querySelector(".shop > h3").innerText = score+"C";
             document.querySelector(".skiny > h3").innerText = score+"C";
-            if(score == 100000){
-              document.querySelector("canvas").style.display = "block"; 
-              document.querySelector("#cat_img").style.animation = "spin 2s infinite"; 
-              document.querySelector(".score").style.animation = "spin 2s infinite"; 
-              document.querySelector(".cps").style.animation = "spin 2s infinite"; 
-              clearInterval(window.interval);
-           }
         }, 1000/window.idle_clicks)
       }
         if(document.querySelector(".span_bieda")){
@@ -282,110 +257,6 @@ document.body.addEventListener("click", function(e){
         e.target.blur();
     }
 })
-        let W = window.innerWidth;
-let H = window.innerHeight;
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
-const maxConfettis = 150;
-const particles = [];
-
-const possibleColors = [
-  "DodgerBlue",
-  "OliveDrab",
-  "Gold",
-  "Pink",
-  "SlateBlue",
-  "LightBlue",
-  "Gold",
-  "Violet",
-  "PaleGreen",
-  "SteelBlue",
-  "SandyBrown",
-  "Chocolate",
-  "Crimson"
-];
-
-function randomFromTo(from, to) {
-  return Math.floor(Math.random() * (to - from + 1) + from);
-}
-
-function confettiParticle() {
-  this.x = Math.random() * W; // x
-  this.y = Math.random() * H - H; // y
-  this.r = randomFromTo(11, 33); // radius
-  this.d = Math.random() * maxConfettis + 11;
-  this.color =
-    possibleColors[Math.floor(Math.random() * possibleColors.length)];
-  this.tilt = Math.floor(Math.random() * 33) - 11;
-  this.tiltAngleIncremental = Math.random() * 0.07 + 0.05;
-  this.tiltAngle = 0;
-
-  this.draw = function() {
-    context.beginPath();
-    context.lineWidth = this.r / 2;
-    context.strokeStyle = this.color;
-    context.moveTo(this.x + this.tilt + this.r / 3, this.y);
-    context.lineTo(this.x + this.tilt, this.y + this.tilt + this.r / 5);
-    return context.stroke();
-  };
-}
-
-function Draw() {
-  const results = [];
-
-  // Magical recursive functional love
-  requestAnimationFrame(Draw);
-
-  context.clearRect(0, 0, W, window.innerHeight);
-
-  for (var i = 0; i < maxConfettis; i++) {
-    results.push(particles[i].draw());
-  }
-
-  let particle = {};
-  let remainingFlakes = 0;
-  for (var i = 0; i < maxConfettis; i++) {
-    particle = particles[i];
-
-    particle.tiltAngle += particle.tiltAngleIncremental;
-    particle.y += (Math.cos(particle.d) + 3 + particle.r / 2) / 2;
-    particle.tilt = Math.sin(particle.tiltAngle - i / 3) * 15;
-
-    if (particle.y <= H) remainingFlakes++;
-
-    // If a confetti has fluttered out of view,
-    // bring it back to above the viewport and let if re-fall.
-    if (particle.x > W + 30 || particle.x < -30 || particle.y > H) {
-      particle.x = Math.random() * W;
-      particle.y = -30;
-      particle.tilt = Math.floor(Math.random() * 10) - 20;
-    }
-  }
-
-  return results;
-}
-
-window.addEventListener(
-  "resize",
-  function() {
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  },
-  false
-);
-
-// Push new confetti objects to `particles[]`
-for (var i = 0; i < maxConfettis; i++) {
-  particles.push(new confettiParticle());
-}
-
-// Initialize
-canvas.width = W;
-canvas.height = H;
-Draw();
-
 function myFunction(x) {
   if (x.matches) { // If media query matches
     document.querySelector("#x_open").innerHTML = '<i class="fa fa-shopping-cart" style="pointer-events: none;"></i>';
@@ -399,3 +270,36 @@ function myFunction(x) {
 var x = window.matchMedia("(max-width: 630px)")
 myFunction(x) // Call listener function at run time
 x.addListener(myFunction) // Attach listener function on state changes
+
+document.querySelector(".settings_icon").addEventListener("click", function(){
+    document.querySelector(".settings").style.display = "block";
+    document.querySelector(".settings").style.animation = "slideInRight 0.5s ease";
+})
+document.querySelector("#x_settings").addEventListener("click", function(){
+    document.querySelector(".settings").style.animation = "slideOutRight 0.5s ease"
+            setTimeout(function(){
+                document.querySelector(".settings").style.display = "none";
+            }, 500)
+})
+document.querySelector(".settings > input").addEventListener("input", function(e){
+    let volume = e.target.value/100;
+    window.volume = volume;
+})
+document.querySelector(".theme_switch").addEventListener("click", function(){
+    if(document.querySelector(".new_style")){
+        document.documentElement.style.setProperty('--color', '#000000');
+        document.documentElement.style.setProperty('--bg', '#ffffff');
+        document.documentElement.style.setProperty('--button-bg', '#202020');
+        document.querySelector(".reset_btn").style.cssText = "border: 1px solid #202020g;";
+        document.querySelector(".new_style").remove();
+    }else{
+        document.documentElement.style.setProperty('--color', '#ffffff');
+        document.documentElement.style.setProperty('--bg', '#202020');
+        document.documentElement.style.setProperty('--button-bg', 'transparent');
+        document.querySelector(".reset_btn").style.cssText = "border: 1px solid var(--color);";
+        let new_style = document.createElement("style");
+        new_style.classList.add("new_style");
+        new_style.innerHTML = ".reset_btn:hover{background: #fff;color: #202020;}";
+        document.querySelector(".settings").appendChild(new_style);
+    }
+})
