@@ -239,15 +239,10 @@ document.body.addEventListener("click", function(e){
         }else{
             if(!document.querySelector(".span_bieda")){
             document.querySelector(".shop > h3").innerHTML =  document.querySelector(".shop > h3").innerHTML+`<br /><span class="span_bieda">Nie stać cie ;(</span>`;
-            document.querySelector(".shop > h3").style.animation = "shake 1s ease";
+            document.querySelector(".span_bieda").style.animation = "shake 1s ease";
             setTimeout(function(){
-              document.querySelector(".shop > h3").style.animation = "none";
+              document.querySelector(".shop > h3").innerHTML = score+"C";
             }, 1000)
-            }else{
-              document.querySelector(".shop > h3").style.animation = "shake 1s ease";
-              setTimeout(function(){
-                document.querySelector(".shop > h3").style.animation = "none";
-              }, 1000)
             }
         }
         e.target.blur();
@@ -263,17 +258,12 @@ document.body.addEventListener("click", function(e){
             save();
         }else{
            if(!document.querySelector(".span_bieda")){
-            document.querySelector(".skiny > h3").innerHTML =  document.querySelector(".skiny > h3").innerHTML+`<br /><span class="span_bieda">Nie stać cie ;(</span>`;
-            document.querySelector(".skiny > h3").style.animation = "shake 1s ease";
-            setTimeout(function(){
-              document.querySelector(".skiny > h3").style.animation = "none";
-            }, 1000)
-            }else{
-              document.querySelector(".skiny > h3").style.animation = "shake 1s ease";
-              setTimeout(function(){
-                document.querySelector(".skiny > h3").style.animation = "none";
-              }, 1000)
-            } 
+                document.querySelector(".skiny > h3").innerHTML =  document.querySelector(".skiny > h3").innerHTML+`<br /><span class="span_bieda">Nie stać cie ;(</span>`;
+                document.querySelector(".span_bieda").style.animation = "shake 1s ease";
+                setTimeout(function(){
+                  document.querySelector(".skiny > h3").innerHTML = score+"C";
+                }, 1000)
+            }
         }
         e.target.blur();
     }
@@ -318,7 +308,16 @@ document.body.addEventListener("click", function(e){
                       e.target.style = "filter: contrast(1);pointer-events: auto;";  
                 }, 80000)
             }
+        }else{
+            if(!document.querySelector(".span_bieda")){
+                document.querySelector(".shop > h3").innerHTML =  document.querySelector(".shop > h3").innerHTML+`<br /><span class="span_bieda">Nie stać cie ;(</span>`;
+                document.querySelector(".span_bieda").style.animation = "shake 1s ease";
+                setTimeout(function(){
+                  document.querySelector(".shop > h3").innerHTML = score+"C";
+                }, 1000)
+            }
         }
+        e.target.blur();
     }
 })
 function myFunction(x) {

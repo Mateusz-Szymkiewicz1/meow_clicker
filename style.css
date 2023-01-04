@@ -88,6 +88,7 @@ transform:rotate(360deg);
     color: #fff;
     display: none;
     overflow-y: auto;
+    overflow-x: hidden;
     z-index: 100;
 }
 .shop > h2, .skiny > h2, .settings > h2{
