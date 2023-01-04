@@ -5,9 +5,11 @@ window.theme = "light";
 window.click_strength = 1;
 window.idle_clicks = 0;
 window.skins = ["robert"];
+window.strength_buff_active = false;
 window.current_skin = "robert";
 document.querySelector("#label_strength").innerText = `Stronger click (${window.click_strength})`;
 document.querySelector("#label_idle").innerText = `Auto clicking (${window.idle_clicks})`;
+document.querySelector("#label_strength_buff").innerText = `Strength buff (20s)`;
 function randomNumber(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -20,8 +22,10 @@ if(window.localStorage.getItem("score")){
             document.querySelector("#label_strength").innerText = `Stronger click (${window.click_strength})`;
             document.querySelector("#buy_strength").innerText = `Buy (${window.click_strength*100})`;
             document.querySelector("#buy_strength").dataset.price = window.click_strength*100;
+            document.querySelector("#buy_strength_buff").dataset.price = window.click_strength*2*50;
+            document.querySelector("#buy_strength_buff").innerText = `BUY (${window.click_strength*2*50})`;
             window.idle_clicks = parseInt(json.idle_clicks);
-            document.querySelector("#label_idle").innerText = `Stronger click (${window.idle_clicks})`;
+            document.querySelector("#label_idle").innerText = `Auto clicking (${window.idle_clicks})`;
             document.querySelector("#buy_idle").innerText = `Buy (${(window.idle_clicks+1)*200})`;
             document.querySelector("#buy_idle").dataset.price = (window.idle_clicks+1)*200;
             document.querySelector("span").innerText = `MeowCount: ${score}`;
@@ -62,9 +66,13 @@ function skiny_check(){
     })
 }
 function save(){
+    let strength = window.click_strength;
+    if(window.strength_buff_active){
+        strength = strength/2;
+    }
   window.localStorage.setItem("score", JSON.stringify({
     score: score,
-    click_strength: window.click_strength,
+    click_strength: strength,
     idle_clicks: window.idle_clicks,
     skins: window.skins,
       current_skin: window.current_skin,
@@ -203,6 +211,8 @@ document.body.addEventListener("click", function(e){
         document.querySelector(".shop > h3").innerText = score+"C";
         if(e.target.dataset.type == "click_strength"){
             window.click_strength++;
+            document.querySelector("#buy_strength_buff").dataset.price = window.click_strength*2*50;
+            document.querySelector("#buy_strength_buff").innerText = `BUY (${window.click_strength*2*50})`;
             document.querySelector("#label_strength").innerText = `Stronger click (${window.click_strength})`;
             e.target.dataset.price = parseInt(e.target.dataset.price)+100;
             e.target.innerText = `Buy (${e.target.dataset.price})`;
@@ -274,6 +284,42 @@ document.body.addEventListener("click", function(e){
         skiny_check();
         e.target.blur();
     }
+    if(e.target.className == "buy buff"){
+        if(score >= e.target.dataset.price){
+            score = score-parseInt(e.target.dataset.price);
+            document.querySelector(".score").innerText = `MeowCount: ${score}`;
+            document.querySelector(".shop > h3").innerText = score+"C";
+            document.querySelector(".skiny > h3").innerText = score+"C";
+            if(e.target.dataset.buff == "strength"){
+                window.strength_buff_active = true;
+                window.click_strength = window.click_strength*2;
+                e.target.disabled = "true";
+                e.target.style = "filter: contrast(0.5);pointer-events: none;";
+                e.target.innerText = "20s";
+                let time_left = 20;
+                let count = 0;
+                const interval = setInterval(function(){
+                    time_left--;
+                    e.target.innerText = time_left+"s";
+                    if(time_left == 0 && count == 0){
+                        count++;
+                        time_left = 60;
+                    }else if(time_left == 0){
+                        clearInterval(interval);
+                    }
+                }, 1000)
+                setTimeout(function(){
+                    window.click_strength = window.click_strength/2;
+                     window.strength_buff_active = false;
+                }, 20000)
+                setTimeout(function(){
+                      e.target.removeAttribute("disabled");
+                    e.target.innerText = `BUY (${e.target.dataset.price})`;
+                      e.target.style = "filter: contrast(1);pointer-events: auto;";  
+                }, 80000)
+            }
+        }
+    }
 })
 function myFunction(x) {
   if (x.matches) { // If media query matches
@@ -308,7 +354,7 @@ document.querySelector(".settings > input").addEventListener("input", function(e
     window.volume = volume;
     timeout = setTimeout(function(){
         save_settings();
-    }, 500)
+    }, 200)
 })
 function light_theme(){
     window.theme = "light";

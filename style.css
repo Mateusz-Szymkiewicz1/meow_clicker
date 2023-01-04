@@ -165,7 +165,7 @@ transform:rotate(360deg);
     color: #e74c3c;
     margin-top: 15px;
 }
-#clock_png{
+#clock_png, #fire_png{
     margin-top: -5px;
     margin-left: 30px;
     margin-right: 20px;
