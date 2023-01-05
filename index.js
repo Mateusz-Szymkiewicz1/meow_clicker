@@ -285,6 +285,8 @@ document.body.addEventListener("click", function(e){
                 window.click_strength = window.click_strength*2;
                 e.target.disabled = "true";
                 e.target.style = "filter: contrast(0.5);pointer-events: none;";
+                document.querySelector("#buy_strength").disabled = "true";
+               document.querySelector("#buy_strength").style = "filter: contrast(0.5);pointer-events: none;";
                 e.target.innerText = "20s";
                 let time_left = 20;
                 let count = 0;
@@ -301,6 +303,8 @@ document.body.addEventListener("click", function(e){
                 setTimeout(function(){
                     window.click_strength = window.click_strength/2;
                      window.strength_buff_active = false;
+                     document.querySelector("#buy_strength").removeAttribute("disabled");
+                     document.querySelector("#buy_strength").style = "filter: contrast(1);pointer-events: auto;";
                 }, 20000)
                 setTimeout(function(){
                       e.target.removeAttribute("disabled");
