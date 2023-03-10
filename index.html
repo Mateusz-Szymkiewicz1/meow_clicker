@@ -44,7 +44,7 @@
         </div><br />
         <div class="shop_item">
             <img src="images/fire.png" width="40px" height="40px" class="shop_img" id="fire_png">
-            <label id="label_strength_buff"></label>
+            <label id="label_strength_buff">Strength Buff (20S)</label>
             <button class="buy buff" data-price="100" data-type="buff" data-buff="strength" id="buy_strength_buff">Buy (100)</button>
         </div>
     </div>
@@ -92,10 +92,12 @@
         <label class="skin_label">Kamień</label><br /><br /><br />
         <button class="skin_buy" data-price="2000">Kup (2000)</button><button class="skin_set">Ustaw</button>
     </div>
-    <div class="skin" data-name="karol" data-state="0">
+    <div class="skin big_skin" data-name="karol" data-state="0">
         <img src="images/karol.jpg" width="100px" height="100px">
-        <label class="skin_label">Karol</label><br /><br /><br />
-        <button class="skin_buy" data-price="2138">Kup (2138)</button><button class="skin_set">Ustaw</button>
+        <label class="skin_label">Karol</label><br /><br /><br/>
+        <label class="skin_buff_label">+5 click strength</label>
+        <br />
+        <button class="skin_buy" data-price="2138">Kup (2138)</button><button class="skin_set" data-buff="click_strength" data-buff-amount="5">Ustaw</button>
     </div>
     </div>
     <i class="fa fa-cog settings_icon"></i>

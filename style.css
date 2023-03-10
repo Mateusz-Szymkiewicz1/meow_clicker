@@ -239,10 +239,22 @@ transform:rotate(360deg);
 .skin>button{
     width: 120px;
 }
-
+.skin_buff_label{
+    margin-top: -15px !important;
+    font-size: 14px !important;
+}
+.big_skin{
+    height: 120px !important;
+}
 @media only screen and (max-width: 466px) {
     .skin{
         height: 130px;
+    }
+    .big_skin{
+        height: 160px !important;
+    }
+    .big_skin .skin_set{
+        margin-top: -10px;
     }
     .skin_set{
         margin-top: 10px;
@@ -252,7 +264,6 @@ transform:rotate(360deg);
         margin-right: 20px;
     }
 }
-
 @keyframes slideInRight{0%{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
 @keyframes slideOutRight{0%{-webkit-transform:translateZ(0);transform:translateZ(0)}to{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0);visibility:hidden}}
 @-webkit-keyframes slideInDown{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);visibility:visible}to{-webkit-transform:translateZ(0);transform:translateZ(0)}}
