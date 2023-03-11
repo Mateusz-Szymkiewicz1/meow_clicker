@@ -10,6 +10,7 @@ window.strength_buff_active = false;
 window.current_skin_buff = "";
 window.current_skin_buff_amount = 0;
 window.skin_buff_strength = 0;
+window.has_skin_buff_auto_click = 0;
 window.current_skin = "robert";
 document.querySelector("#label_strength").innerText = `Stronger click (${window.click_strength})`;
 document.querySelector("#label_idle").innerText = `Auto clicking (${window.idle_clicks})`;
@@ -40,6 +41,16 @@ function get_saved_info() {
         window.skins = json.skins;
         window.current_skin = json.current_skin;
         window.skin_buff_strength = parseInt(json.skin_buff_strength);
+        window.has_skin_buff_auto_click = parseInt(json.has_skin_buff_auto_click);
+        if(window.has_skin_buff_auto_click){
+            window.skin_buff_auto_click = setInterval(function(){
+                score++;
+                save();
+                document.querySelector(".score").innerText = `MeowCount: ${score}`;
+                document.querySelector(".shop > h3").innerText = score + "C";
+                document.querySelector(".skiny > h3").innerText = score + "C";
+            },1000/window.has_skin_buff_auto_click)
+        }
     }
     if (window.localStorage.getItem("meow_settings")) {
         let json = JSON.parse(window.localStorage.getItem("meow_settings"));
@@ -96,6 +107,7 @@ function save() {
         skins: window.skins,
         current_skin: window.current_skin,
         skin_buff_strength: skin_buff_strength,
+        has_skin_buff_auto_click: window.has_skin_buff_auto_click,
     }));
 }
 
@@ -267,17 +279,11 @@ document.body.addEventListener("click", function (e) {
                     document.querySelector(".skiny > h3").innerText = score + "C";
                 }, 1000 / window.idle_clicks)
             }
-            if (document.querySelector(".span_bieda")) {
-                document.querySelector(".span_bieda").remove();
-            }
         } else { // Brak pieniędzy
-            if (!document.querySelector(".span_bieda")) {
-                document.querySelector(".shop > h3").innerHTML = document.querySelector(".shop > h3").innerHTML + `<br /><span class="span_bieda">Nie stać cie ;(</span>`;
-                document.querySelector(".span_bieda").style.animation = "shake 1s ease";
-                setTimeout(function () {
-                    document.querySelector(".shop > h3").innerHTML = score + "C";
+             e.target.style.animation = "shake 1s ease";
+                setTimeout(function(){
+                    e.target.style.animation = "";
                 }, 1000)
-            }
         }
         e.target.blur();
     }
@@ -292,13 +298,10 @@ document.body.addEventListener("click", function (e) {
             document.querySelector(".skiny > h3").innerText = score + "C";
             save();
         } else { // Brak pieniędzy
-            if (!document.querySelector(".span_bieda")) {
-                document.querySelector(".skiny > h3").innerHTML = document.querySelector(".skiny > h3").innerHTML + `<br /><span class="span_bieda">Nie stać cie ;(</span>`;
-                document.querySelector(".span_bieda").style.animation = "shake 1s ease";
-                setTimeout(function () {
-                    document.querySelector(".skiny > h3").innerHTML = score + "C";
+                e.target.style.animation = "shake 1s ease";
+                setTimeout(function(){
+                    e.target.style.animation = "";
                 }, 1000)
-            }
         }
         e.target.blur();
     }
@@ -306,10 +309,24 @@ document.body.addEventListener("click", function (e) {
     if (e.target.className == "skin_set") {
         window.current_skin = e.target.parentElement.dataset.name;
         document.querySelector("#cat_img").src = `images/${e.target.parentElement.dataset.name}.jpg`;
-        if(e.target.dataset.buff){
+        if(e.target.dataset.buff == "click_strength"){
             window.skin_buff_strength = parseInt(e.target.dataset.buffAmount);
+            clearInterval(window.skin_buff_auto_click);
+            window.has_skin_buff_auto_click = 0;
+        }else if(e.target.dataset.buff == "auto_click"){
+            window.has_skin_buff_auto_click = parseInt(e.target.dataset.buffAmount);
+            window.skin_buff_strength = 0;
+            window.skin_buff_auto_click = setInterval(function(){
+                score++;
+                save();
+                document.querySelector(".score").innerText = `MeowCount: ${score}`;
+                document.querySelector(".shop > h3").innerText = score + "C";
+                document.querySelector(".skiny > h3").innerText = score + "C";
+            },1000/window.has_skin_buff_auto_click)
         }else{
             window.skin_buff_strength = 0;
+            clearInterval(window.skin_buff_auto_click);
+            window.has_skin_buff_auto_click = 0;
         }
         save();
         skiny_check();
@@ -358,13 +375,10 @@ document.body.addEventListener("click", function (e) {
                 }, 80000)
             }
         } else { // Brak pieniędzy
-            if (!document.querySelector(".span_bieda")) {
-                document.querySelector(".shop > h3").innerHTML = document.querySelector(".shop > h3").innerHTML + `<br /><span class="span_bieda">Nie stać cie ;(</span>`;
-                document.querySelector(".span_bieda").style.animation = "shake 1s ease";
-                setTimeout(function () {
-                    document.querySelector(".shop > h3").innerHTML = score + "C";
+             e.target.style.animation = "shake 1s ease";
+                setTimeout(function(){
+                    e.target.style.animation = "";
                 }, 1000)
-            }
         }
         e.target.blur();
     }
