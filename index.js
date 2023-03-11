@@ -9,6 +9,7 @@ window.skins = ["robert"];
 window.strength_buff_active = false;
 window.current_skin_buff = "";
 window.current_skin_buff_amount = 0;
+window.skin_buff_strength = 0;
 window.current_skin = "robert";
 document.querySelector("#label_strength").innerText = `Stronger click (${window.click_strength})`;
 document.querySelector("#label_idle").innerText = `Auto clicking (${window.idle_clicks})`;
@@ -38,6 +39,7 @@ function get_saved_info() {
         document.querySelector("span").innerText = `MeowCount: ${score}`;
         window.skins = json.skins;
         window.current_skin = json.current_skin;
+        window.skin_buff_strength = parseInt(json.skin_buff_strength);
     }
     if (window.localStorage.getItem("meow_settings")) {
         let json = JSON.parse(window.localStorage.getItem("meow_settings"));
@@ -82,8 +84,10 @@ skiny_check();
 // Zapisanie stanu gry
 function save() {
     let strength = window.click_strength;
+    let skin_buff_strength = window.skin_buff_strength;
     if (window.strength_buff_active) {
         strength = strength / 2;
+        skin_buff_strength = skin_buff_strength/2;
     }
     window.localStorage.setItem("score", JSON.stringify({
         score: score,
@@ -91,6 +95,7 @@ function save() {
         idle_clicks: window.idle_clicks,
         skins: window.skins,
         current_skin: window.current_skin,
+        skin_buff_strength: skin_buff_strength,
     }));
 }
 
@@ -106,7 +111,7 @@ function save_settings() {
 function click_effect(e) {
     let div = document.createElement("div");
     div.classList.add("random_div");
-    div.innerText = `+${window.click_strength}`;
+    div.innerText = `+${window.click_strength+window.skin_buff_strength}`;
     div.setAttribute("style", `position: absolute; top: ${e.clientY}px;left: ${e.clientX}px;`);
     document.body.appendChild(div);
     setTimeout(function () {
@@ -134,7 +139,7 @@ async function decision() {
 // Kod wykonany przy kliknięciu na kotka/spacji
 function click_handler(e){
     cps++;
-    score = parseInt(score + window.click_strength);
+    score = parseInt(score + window.click_strength + window.skin_buff_strength);
     if (document.querySelector("#cat_img").style.transform == "scale(1)") {
         document.querySelector("#cat_img").style.transform = "scale(1.1)";
     } else {
@@ -302,11 +307,9 @@ document.body.addEventListener("click", function (e) {
         window.current_skin = e.target.parentElement.dataset.name;
         document.querySelector("#cat_img").src = `images/${e.target.parentElement.dataset.name}.jpg`;
         if(e.target.dataset.buff){
-            window.current_skin_buff = e.target.dataset.buff;
-            window.current_skin_buff_amount = parseInt(e.target.dataset.buffAmount);
+            window.skin_buff_strength = parseInt(e.target.dataset.buffAmount);
         }else{
-            window.current_skin_buff = "";
-            window.current_skin_buff_amount = 0;
+            window.skin_buff_strength = 0;
         }
         save();
         skiny_check();
@@ -321,7 +324,8 @@ document.body.addEventListener("click", function (e) {
             document.querySelector(".skiny > h3").innerText = score + "C";
             if (e.target.dataset.buff == "strength") {
                 window.strength_buff_active = true;
-                window.click_strength = window.click_strength * 2;
+                window.click_strength = window.click_strength*2;
+                window.skin_buff_strength = window.skin_buff_strength*2;
                 e.target.disabled = "true";
                 e.target.style = "filter: contrast(0.5);pointer-events: none;";
                 document.querySelector("#buy_strength").disabled = "true";
@@ -342,6 +346,7 @@ document.body.addEventListener("click", function (e) {
                 }, 1000)
                 setTimeout(function () { // Czas trwania buffa
                     window.click_strength = window.click_strength / 2;
+                    window.skin_buff_strength = window.skin_buff_strength / 2;
                     window.strength_buff_active = false;
                     document.querySelector("#buy_strength").removeAttribute("disabled");
                     document.querySelector("#buy_strength").style = "filter: contrast(1);pointer-events: auto;";
