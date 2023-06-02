@@ -186,7 +186,6 @@ document.querySelector(".reset_btn").addEventListener("click", async function (e
             score = 0;
             document.querySelector(".score").innerText = `MeowCount: ${score}`;
             window.localStorage.removeItem("score");
-            window.click_strength = 1;
             document.location.reload();
         }, function () {
             document.querySelector(".decision").style.animation = "slideOutUp 0.5s ease";
