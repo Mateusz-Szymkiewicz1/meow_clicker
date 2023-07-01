@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="cat clicker game ;)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <title>MeowClicker</title>
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body id="body">
-    <img src="images/loading.gif" id="cat_img" style="transform: scale(1)" draggable="false">
+    <img src="images/loading.gif" id="cat_img" style="transform: scale(1)" draggable="false" alt="cat">
     <span class="score">MeowCount: 0</span>
     <span class="cps">CPS : 0</span>
     <audio src="audio/meow.mp3" class="audio_meow"></audio>
@@ -32,17 +33,17 @@
     <h2>Sklep</h2>
     <h3></h3>
         <div class="shop_item">
-            <img src="images/cursor.png" width="60px" height="60px" class="shop_img">
+            <img src="images/cursor.png" width="60px" height="60px" class="shop_img" alt="strength">
             <label id="label_strength"></label>
             <button class="buy" data-price="100" data-type="click_strength" id="buy_strength">Buy (100)</button>
         </div><br />
         <div class="shop_item">
-            <img src="images/clock.png" width="40px" height="40px" class="shop_img" id="clock_png">
+            <img src="images/clock.png" width="40px" height="40px" class="shop_img" id="clock_png" alt="idle clicks"> 
             <label id="label_idle"></label>
             <button class="buy" data-price="200" data-type="idle_clicks" id="buy_idle">Buy (200)</button>
         </div><br />
         <div class="shop_item">
-            <img src="images/fire.png" width="40px" height="40px" class="shop_img" id="fire_png">
+            <img src="images/fire.png" width="40px" height="40px" class="shop_img" id="fire_png" alt="strength buff">
             <label id="label_strength_buff">Strength Buff (20S)</label>
             <button class="buy buff" data-price="100" data-type="buff" data-buff="strength" id="buy_strength_buff">Buy (100)</button>
         </div>
@@ -52,51 +53,51 @@
         <h2>Skiny</h2>
     <h3></h3>
     <div class="skin" data-name="robert" data-state="1">
-        <img src="images/robert.jpg" width="100px" height="100px">
+        <img src="images/robert.jpg" width="100px" height="100px" alt="robert">
         <label class="skin_label">Robert</label><br /><br /><br />
         <button class="skin_buy">Kup</button><button class="skin_set">Ustaw</button>
     </div>
     <div class="skin" data-name="herbert" data-state="0">
-        <img src="images/herbert.jpg" width="100px" height="100px">
+        <img src="images/herbert.jpg" width="100px" height="100px" alt="herbert">
         <label class="skin_label">Herbert</label><br /><br /><br />
         <button class="skin_buy" data-price="400">Kup (400)</button><button class="skin_set">Ustaw</button>
     </div>
     <div class="skin" data-name="ildefons" data-state="0">
-        <img src="images/ildefons.jpg" width="100px" height="100px">
+        <img src="images/ildefons.jpg" width="100px" height="100px" alt="ildefons">
         <label class="skin_label">Ildefons</label><br /><br /><br />
         <button class="skin_buy" data-price="600">Kup (600)</button><button class="skin_set">Ustaw</button>
     </div>
     <div class="skin" data-name="laurenty" data-state="0">
-        <img src="images/laurenty.jpg" width="100px" height="100px">
+        <img src="images/laurenty.jpg" width="100px" height="100px" alt="laurenty">
         <label class="skin_label">Laurenty</label><br /><br /><br />
         <button class="skin_buy" data-price="800">Kup (800)</button><button class="skin_set">Ustaw</button>
     </div>
     <div class="skin" data-name="konstanty" data-state="0">
-        <img src="images/konstanty.jpg" width="100px" height="100px">
+        <img src="images/konstanty.jpg" width="100px" height="100px" alt="konstanty">
         <label class="skin_label">Konstanty</label><br /><br /><br />
         <button class="skin_buy" data-price="1000">Kup (1000)</button><button class="skin_set">Ustaw</button>
     </div>
      <div class="skin" data-name="gerwazy" data-state="0">
-        <img src="images/gerwazy.jpg" width="100px" height="100px">
+        <img src="images/gerwazy.jpg" width="100px" height="100px" alt="gerwazy">
         <label class="skin_label">Gerwazy</label><br /><br /><br />
         <button class="skin_buy" data-price="1200">Kup (1200)</button><button class="skin_set">Ustaw</button>
     </div>
     <div class="skin big_skin" data-name="greg" data-state="0">
-        <img src="images/greg.jpg" width="100px" height="100px">
+        <img src="images/greg.jpg" width="100px" height="100px" alt="greg">
         <label class="skin_label">Greg</label><br /><br /><br/>
         <label class="skin_buff_label">+2 click strength</label>
         <br />
         <button class="skin_buy" data-price="1500">Kup (1500)</button><button class="skin_set" data-buff="click_strength" data-buff-amount="2">Ustaw</button>
     </div>
     <div class="skin big_skin" data-name="kamien" data-state="0">
-        <img src="images/kamien.jpg" width="100px" height="100px">
+        <img src="images/kamien.jpg" width="100px" height="100px" alt="kamien">
         <label class="skin_label">Kamień</label><br /><br /><br/>
         <label class="skin_buff_label">+2 Auto Clicks</label>
         <br />
         <button class="skin_buy" data-price="2000">Kup (2000)</button><button class="skin_set" data-buff="auto_click" data-buff-amount="2">Ustaw</button>
     </div>
     <div class="skin big_skin" data-name="karol" data-state="0">
-        <img src="images/karol.jpg" width="100px" height="100px">
+        <img src="images/karol.jpg" width="100px" height="100px" alt="karol">
         <label class="skin_label">Karol</label><br /><br /><br/>
         <label class="skin_buff_label">+5 click strength</label>
         <br />
